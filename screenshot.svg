@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#1a0a20"/>
+      <stop offset="100%" style="stop-color:#0a0608"/>
+    </radialGradient>
+    <radialGradient id="sporeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#9f7fff;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#6a3fff;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg)"/>
+  
+  <!-- Earth texture dots -->
+  <g fill="#2a1520" opacity="0.5">
+    <circle cx="120" cy="80" r="2"/><circle cx="340" cy="150" r="1.5"/>
+    <circle cx="560" cy="90" r="2"/><circle cx="200" cy="320" r="1"/>
+    <circle cx="450" cy="280" r="2"/><circle cx="680" cy="350" r="1.5"/>
+    <circle cx="150" cy="450" r="2"/><circle cx="380" cy="480" r="1"/>
+    <circle cx="600" cy="520" r="1.5"/><circle cx="720" cy="200" r="2"/>
+  </g>
+  
+  <!-- Tree roots -->
+  <g stroke="#4a3020" stroke-width="4" fill="none" opacity="0.7">
+    <path d="M150,0 Q160,100 140,200"/>
+    <path d="M150,0 Q170,80 180,180"/>
+    <path d="M650,0 Q630,120 660,220"/>
+    <path d="M650,0 Q670,100 640,200"/>
+  </g>
+  
+  <!-- Tree connection nodes (unconnected) -->
+  <g>
+    <circle cx="150" cy="400" r="12" fill="#2a6030" opacity="0.8"/>
+    <circle cx="650" cy="420" r="12" fill="#2a6030" opacity="0.8"/>
+  </g>
+  
+  <!-- Central spore -->
+  <circle cx="400" cy="300" r="40" fill="url(#sporeGlow)"/>
+  <circle cx="400" cy="300" r="20" fill="#9f7fff" filter="url(#glow)"/>
+  
+  <!-- Mycelium tendrils -->
+  <g stroke="#00ffff" stroke-width="2" fill="none" opacity="0.8" filter="url(#glow)">
+    <path d="M400,300 Q350,250 300,280 Q250,310 220,280"/>
+    <path d="M400,300 Q450,240 500,260 Q550,280 580,250"/>
+    <path d="M400,300 Q380,350 350,380 Q320,410 340,450"/>
+    <path d="M400,300 Q440,340 470,370 Q500,400 480,440"/>
+  </g>
+  
+  <!-- Rocks -->
+  <g fill="#3a3a40">
+    <polygon points="200,200 220,180 240,200 230,220 210,220"/>
+    <polygon points="550,150 565,135 580,150 575,165 555,165"/>
+  </g>
+  
+  <!-- Toxic patch -->
+  <ellipse cx="600" cy="500" rx="50" ry="40" fill="#20ff40" opacity="0.2"/>
+  
+  <!-- UI Overlay -->
+  <text x="20" y="40" fill="#9f7fff" font-family="monospace" font-size="20" filter="url(#glow)">MYCELIUM PULSE</text>
+  <text x="20" y="70" fill="#6a9fff" font-family="monospace" font-size="14">Trees Connected: 0 / 5</text>
+  <text x="20" y="90" fill="#6a9fff" font-family="monospace" font-size="14">Network Health: 100%</text>
+  <text x="700" y="40" fill="#ff6b9d" font-family="monospace" font-size="28" text-anchor="end">60</text>
+</svg>
