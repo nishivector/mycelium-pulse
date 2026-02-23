@@ -11,7 +11,7 @@
       background: #0a0608;
       font-family: 'Courier New', monospace;
     }
-    #game-canvas { display: block; }
+    #game-canvas { display: block; touch-action: none; }
     #ui {
       position: fixed;
       top: 20px;
@@ -513,20 +513,17 @@
       damageSynth.triggerAttackRelease('C2', '8n');
     }
     
-    // Mouse handling
+    // Pointer handling
     function getEventPos(e) {
       const canvas = renderer.domElement;
       const rect = canvas.getBoundingClientRect();
-      if (e.touches && e.touches.length > 0) {
-        return {
-          x: e.touches[0].clientX - rect.left,
-          y: e.touches[0].clientY - rect.top
-        };
-      }
-      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
     }
 
-    function onMouseMove(event) {
+    function onPointerMove(event) {
       const pos = getEventPos(event);
       state.mouseX = (pos.x / window.innerWidth) * 2 - 1;
       state.mouseY = -(pos.y / window.innerHeight) * 2 + 1;
@@ -596,33 +593,27 @@
       updateUI();
     }
     
-    // Click to start/restart
-    window.addEventListener('click', () => {
+    // Pointer events for mouse + touch input
+    const canvas = renderer.domElement;
+    window.addEventListener('pointermove', onPointerMove);
+
+    canvas.addEventListener('pointerdown', (e) => {
       initAudio();
       if (state.gameOver) {
         restart();
       }
     });
+
+    canvas.addEventListener('pointermove', (e) => {
+      onPointerMove(e);
+    });
+
+    canvas.addEventListener('pointerup', (e) => {
+      // Handled by pointermove
+    });
     
-    window.addEventListener('mousemove', onMouseMove);
-
-    // Touch handling for mobile/tablet
-    const canvas = renderer.domElement;
-    canvas.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      initAudio();
-      if (state.gameOver) {
-        restart();
-      }
-    }, { passive: false });
-
-    canvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      onMouseMove(e);
-    }, { passive: false });
-
-    canvas.addEventListener('touchend', (e) => {
-      e.preventDefault();
+    canvas.addEventListener('pointercancel', (e) => {
+      // Handled by pointermove
     });
     
     // Window resize
