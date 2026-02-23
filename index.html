@@ -514,19 +514,11 @@
     }
     
     // Pointer handling
-    function getEventPos(e) {
+    function onPointerMove(event) {
       const canvas = renderer.domElement;
       const rect = canvas.getBoundingClientRect();
-      return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      };
-    }
-
-    function onPointerMove(event) {
-      const pos = getEventPos(event);
-      state.mouseX = (pos.x / window.innerWidth) * 2 - 1;
-      state.mouseY = -(pos.y / window.innerHeight) * 2 + 1;
+      state.mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      state.mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     }
     
     function getMouseWorld() {
@@ -595,7 +587,6 @@
     
     // Pointer events for mouse + touch input
     const canvas = renderer.domElement;
-    window.addEventListener('pointermove', onPointerMove);
 
     canvas.addEventListener('pointerdown', (e) => {
       initAudio();
